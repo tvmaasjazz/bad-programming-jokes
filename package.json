@@ -1,0 +1,19 @@
+{
+  "name": "bad-programming-jokes",
+  "version": "1.0.0",
+  "description": "A site for bad programming jokes",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tvmaasjazz/bad-programming-jokes.git"
+  },
+  "author": "Tyler Vander Maas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tvmaasjazz/bad-programming-jokes/issues"
+  },
+  "homepage": "https://github.com/tvmaasjazz/bad-programming-jokes#readme"
+}
