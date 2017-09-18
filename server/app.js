@@ -11,7 +11,7 @@ app.use(parser.urlencoded({
   extended: true
 }));
 
-//ROUTES
+//userRoutes
 const userRoutes = require('./controllers/user.js');
 app.use('/user', userRoutes);
 
