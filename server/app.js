@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const parser = require('body-parser');
 const cors = require('cors');
+const db = require('./db');
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(parser.json());
 app.use(parser.urlencoded({
   extended: true
 }));
+app.use(cors());
 
 //userRoutes
 const userRoutes = require('./controllers/user.js');
@@ -22,10 +24,16 @@ const reactionRoutes = require('./controllers/reaction.js');
 app.use('/reaction', reactionRoutes);
 
 //DATABASE/SERVER
-app.listen(process.env.PORT, err => {
+db.syncAllModels(err => {
   if (err) {
-    console.log('Could not start server: ', err);
-  } else {
-    console.log('Bad Programming Jokes connected at ' + process.env.PORT);
+    return console.log('FAILED to sync DB', err);
   }
+
+  app.listen(process.env.PORT, err => {
+    if (err) {
+      return console.log('Could not start server: ', err);
+    }
+
+    console.log('Bad Programming Jokes connected at ' + process.env.PORT);
+  });  
 });

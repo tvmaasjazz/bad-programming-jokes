@@ -29,7 +29,8 @@
     "express": "^4.15.4",
     "mysql2": "^1.4.2",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "sequelize": "^4.8.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
