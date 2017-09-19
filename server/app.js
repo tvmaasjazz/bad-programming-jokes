@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const parser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const db = require('./db');
 
 const app = express();
@@ -22,6 +23,9 @@ app.use('/joke', jokeRoutes);
 
 const reactionRoutes = require('./controllers/reaction.js');
 app.use('/reaction', reactionRoutes);
+
+//static
+app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 app.listen(process.env.PORT, err => {
   if (err) {
