@@ -29,5 +29,4 @@ app.listen(process.env.PORT, err => {
   }
 
   console.log('Bad Programming Jokes connected at ' + process.env.PORT);
-  db.Sequelize.sync();
 });  
