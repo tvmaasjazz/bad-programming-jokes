@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
   .then(user => {
     db.Joke.create({
       text: req.body.text,
-      userId: user.attributes.id
+      userId: user.dataValues.id
     })
     .then(joke => {
       res.status(201).send(joke);
@@ -31,8 +31,6 @@ router.post('/', (req, res) => {
     .catch(err => console.log('FAILED to create joke: ', err));
   })
   .catch(err => console.log('FAILED to find user: ', err));
-
-  res.status(201).send('joke post');
 });
 
 //add delete
