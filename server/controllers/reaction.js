@@ -5,7 +5,6 @@ const db = require('../db');
 //   res.status(200).send('reaction get');
 // });
 
-//
 router.post('/', (req, res) => {
   db.User.findOne({where: {username: req.body.username}})
   .then(user => {
@@ -17,15 +16,30 @@ router.post('/', (req, res) => {
     })
     .then(reaction => {
       if (reaction) {
-        db.Reaction.update({
-          where: {id: reaction.dataValues.id},
-          values: {reactionType:}
-        })
-        .then(reaction => {
-          console.log('updated reaction: ', reaction));
-          res.status(201).send(reaction);
-        })
-        .catch(err => console.log('FAILED to update reaction: ', err));
+
+        console.log('got the reaction and it does exist');
+
+        console.log('reaction.dataValues.reactionType ', reaction.dataValues.reactionType);
+        console.log('req.body.reactionType ', req.body.reactionType);
+        if (reaction.dataValues.reactionType == req.body.reactionType) {
+          console.log('reaction is same type so deleting');
+          db.Reaction.destroy({where: {id: reaction.dataValues.id}})
+          .then(() => {
+            console.log('deleted reaction');
+            res.sendStatus(204);
+          })
+          .catch(err => console.log('FAILED to delete reaction: ', err));
+        } else {
+          console.log('reaction is different so updating');
+          db.Reaction.update(
+            {reactionType: req.body.reactionType},
+            {where: {id: reaction.dataValues.id}})
+          .then(reaction => {
+            console.log('updated reaction: ', reaction);
+            res.status(201).send(reaction);
+          })
+          .catch(err => console.log('FAILED to update reaction: ', err));
+        }
       } else {
         db.Reaction.create({
           reactionType: req.body.reactionType,
