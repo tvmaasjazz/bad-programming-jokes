@@ -33,6 +33,15 @@ router.post('/', (req, res) => {
   .catch(err => console.log('FAILED to find user: ', err));
 });
 
-//add delete
+router.delete('/', (req, res) => {
+  db.Joke.destroy({where: {id: req.body.id}})
+    .then(joke => {
+      res.status(200).send();
+    })
+    .catch(err => {
+      console.log('FAILED to delete joke: ', err);
+      res.status(400).send('failed to delete');
+    });
+});
 
 module.exports = router;
