@@ -23,19 +23,11 @@ app.use('/joke', jokeRoutes);
 const reactionRoutes = require('./controllers/reaction.js');
 app.use('/reaction', reactionRoutes);
 
-//static
-
-//DATABASE/SERVER
-db.syncAllModels(err => {
+app.listen(process.env.PORT, err => {
   if (err) {
-    return console.log('FAILED to sync DB', err);
+    return console.log('Could not start server: ', err);
   }
 
-  app.listen(process.env.PORT, err => {
-    if (err) {
-      return console.log('Could not start server: ', err);
-    }
-
-    console.log('Bad Programming Jokes connected at ' + process.env.PORT);
-  });  
-});
+  console.log('Bad Programming Jokes connected at ' + process.env.PORT);
+  db.Sequelize.sync();
+});  
