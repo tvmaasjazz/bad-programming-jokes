@@ -35,8 +35,8 @@ router.post('/', (req, res) => {
 
 router.delete('/', (req, res) => {
   db.Joke.destroy({where: {id: req.body.id}})
-    .then(joke => {
-      res.status(200).send();
+    .then(() => {
+      res.sendStatus(204);
     })
     .catch(err => {
       console.log('FAILED to delete joke: ', err);
