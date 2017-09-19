@@ -16,46 +16,49 @@ router.post('/', (req, res) => {
     })
     .then(reaction => {
       if (reaction) {
-
-        console.log('got the reaction and it does exist');
-
-        console.log('reaction.dataValues.reactionType ', reaction.dataValues.reactionType);
-        console.log('req.body.reactionType ', req.body.reactionType);
         if (reaction.dataValues.reactionType == req.body.reactionType) {
-          console.log('reaction is same type so deleting');
-          db.Reaction.destroy({where: {id: reaction.dataValues.id}})
-          .then(() => {
-            console.log('deleted reaction');
-            res.sendStatus(204);
-          })
-          .catch(err => console.log('FAILED to delete reaction: ', err));
+          deleteReaction(req, res, reaction);
         } else {
-          console.log('reaction is different so updating');
-          db.Reaction.update(
-            {reactionType: req.body.reactionType},
-            {where: {id: reaction.dataValues.id}})
-          .then(reaction => {
-            console.log('updated reaction: ', reaction);
-            res.status(201).send(reaction);
-          })
-          .catch(err => console.log('FAILED to update reaction: ', err));
+          updateReaction(req, res, reaction);
         }
       } else {
-        db.Reaction.create({
-          reactionType: req.body.reactionType,
-          userId: user.dataValues.id,
-          jokeId: req.body.jokeId
-        })
-        .then(reaction => {
-          console.log('created new reation: ', reaction);
-          res.status(201).send(reaction);
-        })
-        .catch(err => console.log('FAILED to create reaction: ', err));
+        createReaction(req, res, reaction, user);
       }
     })
     .catch(err => console.log('ERROR trying to find reaction: ', err));
   })
   .catch(err => console.log('FAILED to find user: ', err));
 });
+
+function deleteReaction(req, res, reaction) {
+    db.Reaction.destroy({where: {id: reaction.dataValues.id}})
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => console.log('FAILED to delete reaction: ', err));
+}
+
+function updateReaction(req, res, reaction) {
+  db.Reaction.update(
+    {reactionType: req.body.reactionType},
+    {where: {id: reaction.dataValues.id}})
+  .then(reaction => {
+    res.sendStatus(204);
+  })
+  .catch(err => console.log('FAILED to update reaction: ', err));
+}
+
+function createReaction(req, res, reaction, user) {
+  db.Reaction.create({
+    reactionType: req.body.reactionType,
+    userId: user.dataValues.id,
+    jokeId: req.body.jokeId
+  })
+  .then(reaction => {
+    console.log('created new reaction: ', reaction);
+    res.status(201).send(reaction);
+  })
+  .catch(err => console.log('FAILED to create reaction: ', err));
+}
 
 module.exports = router;
