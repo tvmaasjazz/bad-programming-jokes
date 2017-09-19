@@ -9,7 +9,7 @@
     "startmon": "nodemon server/app.js",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "reseed": "node server/db/seed.js"
+    "seed": "node server/db/seed.js"
   },
   "repository": {
     "type": "git",
