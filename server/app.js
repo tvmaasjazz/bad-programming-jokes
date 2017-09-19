@@ -23,6 +23,8 @@ app.use('/joke', jokeRoutes);
 const reactionRoutes = require('./controllers/reaction.js');
 app.use('/reaction', reactionRoutes);
 
+//static
+
 //DATABASE/SERVER
 db.syncAllModels(err => {
   if (err) {
