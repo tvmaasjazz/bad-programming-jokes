@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
     console.log('created new user: ', user);
     res.status(201).send(user);
   })
-  .catch(err => console.log('FAILED to create user: ', err));
+  .catch(err => console.log('FAILED to create user: ', err)); 
 });
 
 module.exports = router;
